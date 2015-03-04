@@ -74,6 +74,6 @@ class CookieAuthenticator implements SimplePreAuthenticatorInterface, Authentica
      */
     public function onAuthenticationFailure( Request $request, AuthenticationException $exception )
     {
-        return new Response('', 403);
+        return new Response($exception->getMessage(), 403);
     }
 }
