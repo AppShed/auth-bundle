@@ -16,7 +16,7 @@ monolog:
 
 services:
   login_cache:
-    class: Doctrine\Common\Cache\ApcCache
+    class: Doctrine\Common\Cache\ArrayCache
 
 app_shed_auth:
     api: "api"
