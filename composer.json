@@ -1,0 +1,27 @@
+{
+    "name": "appshed/auth-bundle",
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "description": "Bundle for login using the single appshed cookie",
+    "autoload": {
+        "psr-4": { "AppShed\\AuthBundle\\": "src/AppShed/AuthBundle" }
+    },
+    "autoload-dev": {
+        "psr-4": { "AppShed\\AuthBundle\\": "tests/AppShed/AuthBundle" }
+    },
+    "require": {
+        "php": ">=5.4",
+        "symfony/symfony": "2.6.*",
+        "guzzlehttp/guzzle": "~5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.3",
+        "theseer/phpdox": "~0.7",
+        "phploc/phploc": "~2.0",
+        "pdepend/pdepend": "~2.0",
+        "phpmd/phpmd": "~2.1",
+        "sensio/generator-bundle": "~2.3",
+        "symfony/monolog-bundle": "~2.4",
+        "sensio/framework-extra-bundle": "~3.0,>=3.0.2"
+    }
+}

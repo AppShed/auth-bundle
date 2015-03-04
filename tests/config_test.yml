@@ -1,0 +1,39 @@
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+    router:
+        resource: "%kernel.root_dir%/routing.yml"
+        strict_requirements: ~
+    validation:      { enable_annotations: true }
+    secret: 'fake_secret'
+    form: ~
+
+monolog:
+    handlers:
+        main:
+            type: console
+
+services:
+  login_cache:
+    class: Doctrine\Common\Cache\ApcCache
+
+app_shed_auth:
+    api: "api"
+    cookie_name: "cookie_name"
+    cache_service: login_cache
+
+security:
+    providers:
+        cookie_user_provider:
+            id: app_shed_auth.cookie_user_provider
+
+    firewalls:
+        secured_area:
+            pattern: ^/
+            stateless: true
+            simple_preauth:
+                authenticator: app_shed_auth.cookie_authenticator
+
+    access_control:
+       - { path: ^/, roles: ROLE_USER }

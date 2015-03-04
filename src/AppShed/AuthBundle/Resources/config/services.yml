@@ -1,0 +1,14 @@
+parameters:
+    app_shed_auth.api: ''
+    app_shed_auth.cookie_name: ''
+
+services:
+    app_shed_auth.cookie_authenticator:
+        class:     AppShed\AuthBundle\Security\CookieAuthenticator
+        arguments: ["@app_shed_auth.cookie_user_provider" , %app_shed_auth.cookie_name% ]
+
+    app_shed_auth.client:
+        class: GuzzleHttp\Client
+        arguments:
+            -
+                base_url: %app_shed_auth.api%
