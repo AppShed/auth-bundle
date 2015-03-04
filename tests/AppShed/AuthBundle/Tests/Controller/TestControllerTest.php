@@ -30,7 +30,7 @@ class TestControllerTest extends WebTestCase
                    ->with($this->anything(), $this->callback(function ($ops) {
                        return is_array($ops) && array_key_exists('query',
                            $ops) && is_array($ops['query']) && array_key_exists('sessionId',
-                           $ops['query']) && $ops['query']['sessionId'] == 'qweqw';
+                           $ops['query']) && $ops['query']['sessionId'] == 'somesessionid';
                    }))
                    ->will($this->returnValue(new Response(200, ['Content-type' => 'application/json'],
                        Stream::factory(json_encode([
@@ -45,7 +45,7 @@ class TestControllerTest extends WebTestCase
                        ])))));
 
         $client->getContainer()->set('app_shed_auth.client', $mockClient);
-        $client->getCookieJar()->set(new Cookie($options, 'qweqw'));
+        $client->getCookieJar()->set(new Cookie($options, 'somesessionid'));
 
         $client->request('GET', '/');
 
@@ -75,7 +75,7 @@ class TestControllerTest extends WebTestCase
                        new Response(404, ['Content-type' => 'application/json']))));
 
         $client->getContainer()->set('app_shed_auth.client', $mockClient);
-        $client->getCookieJar()->set(new Cookie($options, 'qweqwq'));
+        $client->getCookieJar()->set(new Cookie($options, 'somesessionid'));
 
         $client->request('GET', '/');
 
