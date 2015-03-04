@@ -23,14 +23,15 @@ class TestControllerTest extends WebTestCase
 
     private $cookieName;
 
-    public function setUp(){
-        $client  = static::createClient();
+    public function setUp()
+    {
+        $client           = static::createClient();
         $this->cookieName = $client->getContainer()->getParameter('app_shed_auth.cookie_name');
     }
 
     public function testSuccess()
     {
-        $client  = static::createClient();
+        $client = static::createClient();
 
         $guzzleMock = $this->getMock('GuzzleHttp\Client', ['get'], [], '', false);
         $guzzleMock->expects($this->once())
@@ -73,7 +74,7 @@ class TestControllerTest extends WebTestCase
 
     public function testSessionNotFound()
     {
-        $client  = static::createClient();
+        $client = static::createClient();
 
         $guzzleMock = $this->getMock('GuzzleHttp\Client', ['get'], [], '', false);
         $guzzleMock->expects($this->once())
@@ -92,7 +93,7 @@ class TestControllerTest extends WebTestCase
 
     public function testInvalidSession()
     {
-        $client  = static::createClient();
+        $client = static::createClient();
 
         $guzzleMock = $this->getMock('GuzzleHttp\Client', ['get'], [], '', false);
         $guzzleMock->expects($this->once())
@@ -111,7 +112,7 @@ class TestControllerTest extends WebTestCase
 
     public function testFatalError()
     {
-        $client  = static::createClient();
+        $client = static::createClient();
 
         $guzzleMock = $this->getMock('GuzzleHttp\Client', ['get'], [], '', false);
         $guzzleMock->expects($this->once())
@@ -130,7 +131,7 @@ class TestControllerTest extends WebTestCase
 
     public function testNoCookie()
     {
-        $client  = static::createClient();
+        $client     = static::createClient();
         $guzzleMock = $this->getMock('GuzzleHttp\Client', ['get'], [], '', false);
         $guzzleMock->expects($this->never())
                    ->method('get');
@@ -146,7 +147,7 @@ class TestControllerTest extends WebTestCase
 
     public function testGetCache()
     {
-        $client  = static::createClient();
+        $client = static::createClient();
 
         $guzzleMock = $this->getMock('Doctrine\Common\Cache\ArrayCache', ['fetch']);
         $guzzleMock->expects($this->once())
@@ -173,18 +174,18 @@ class TestControllerTest extends WebTestCase
 
     public function testSetCache()
     {
-        $client  = static::createClient();
+        $client = static::createClient();
 
-        $cacheMock = $this->getMock('Doctrine\Common\Cache\ArrayCache', ['fetch','save']);
+        $cacheMock = $this->getMock('Doctrine\Common\Cache\ArrayCache', ['fetch', 'save']);
         $cacheMock->expects($this->once())
-                   ->method('fetch')
-                   ->will($this->returnValue(null));
+                  ->method('fetch')
+                  ->will($this->returnValue(null));
 
         $cacheMock->expects($this->once())
-                   ->method('save')
-                    ->with($this->equalTo('somesessionid'),$this->callback(function ($user) {
-                        return $user instanceof User;
-                    }));
+                  ->method('save')
+                  ->with($this->equalTo('somesessionid'), $this->callback(function ($user) {
+                      return $user instanceof User;
+                  }));
 
         $client->getContainer()->set('login_cache', $cacheMock);
 
@@ -210,7 +211,6 @@ class TestControllerTest extends WebTestCase
 
         $client->getContainer()->set('app_shed_auth.client', $guzzleMock);
         $client->getCookieJar()->set(new Cookie($this->cookieName, 'somesessionid'));
-
 
 
         $client->request('GET', '/');
